@@ -8,9 +8,13 @@ html {
 
 body {
   margin: 0;
+  height: 100vh;
+}
+
+#root {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100%;
 }
 
 .main {
@@ -71,7 +75,7 @@ body {
 }
 
 .hero {
-  background-image: url('./assets/img/bank-tree.jpeg');
+  background-image: url("./assets/img/bank-tree.jpeg");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;

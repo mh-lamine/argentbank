@@ -3,9 +3,9 @@ import ArgentBankLogo from "../assets/img/argentBankLogo.png";
 
 export default function Profile() {
   return (
-    <div>
+    <>
       <nav className="main-nav">
-        <Link className="main-nav-logo" to="./index.html">
+        <Link className="main-nav-logo" to="/">
           <img
             className="main-nav-logo-image"
             src={ArgentBankLogo}
@@ -68,6 +68,6 @@ export default function Profile() {
       <footer className="footer">
         <p className="footer-text">Copyright 2020 Argent Bank</p>
       </footer>
-    </div>
+    </>
   );
 }

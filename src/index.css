@@ -132,6 +132,29 @@ body {
   flex-direction: column;
 }
 
+.update-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1em;
+  color: white;
+  & div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    & input {
+      font-size: 1.2em;
+    }
+  }
+  & button {
+    font-size: 1.2em;
+    padding: .5em;
+    margin-bottom: .5em;
+  }
+}
+
 @media (min-width: 920px) {
   .features {
     flex-direction: row;

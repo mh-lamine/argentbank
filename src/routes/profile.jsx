@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
 import ArgentBankLogo from "../assets/img/argentBankLogo.png";
 
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../features/userInfos/userSlice";
+import { useState } from "react";
+
 export default function Profile() {
+  const dispatch = useDispatch();
+  const { firstName, lastName } = useSelector((store) => store.user);
+
+  const [name, setName] = useState({ firstName: "", lastName: "" });
+  console.log(name);
   return (
     <>
       <nav className="main-nav">
@@ -29,7 +38,7 @@ export default function Profile() {
           <h1>
             Welcome back
             <br />
-            Tony Jarvis!
+            {firstName} {lastName}
           </h1>
           <button className="edit-button">Edit Name</button>
         </div>
@@ -63,6 +72,41 @@ export default function Profile() {
           <div className="account-content-wrapper cta">
             <button className="transaction-button">View transactions</button>
           </div>
+        </section>
+        <section className="update-info">
+          <div>
+            <label htmlFor="firstName">Nom</label>
+            <input
+              type="text"
+              id="firstName"
+              onChange={(e) =>
+                setName((prevName) => ({
+                  ...prevName,
+                  firstName: e.target.value,
+                }))
+              }
+            />
+          </div>
+          <div>
+            <label htmlFor="lastName">Prenom</label>
+            <input
+              type="text"
+              id="lastName"
+              onChange={(e) =>
+                setName((prevName) => ({
+                  ...prevName,
+                  lastName: e.target.value,
+                }))
+              }
+            />
+          </div>
+          <button
+            onClick={() => {
+              dispatch(updateUser({firstName: name.firstName, lastName:name.lastName}));
+            }}
+          >
+            Update info
+          </button>
         </section>
       </main>
       <footer className="footer">

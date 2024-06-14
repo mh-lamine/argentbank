@@ -1,23 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ArgentBankLogo from "../assets/img/argentBankLogo.png";
-import fetchToken from "../service/fetchData";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../features/auth/authSlice";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
-  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loading, error } = useSelector((store) => store.auth);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const fetchedToken = await fetchToken(email, password);
-      setToken(fetchedToken);
-    } catch (err) {
-      setError("Failed to login. Please check your credentials.");
+    const resultAction = await dispatch(login({ email, password }));
+
+    if (login.fulfilled.match(resultAction)) {
+      navigate("/profile");
     }
   };
+
   return (
     <>
       <nav className="main-nav">
@@ -61,8 +63,12 @@ export default function Login() {
               <input type="checkbox" id="remember-me" />
               <label htmlFor="remember-me">Remember me</label>
             </div>
-            <button className="sign-in-button" onClick={handleLogin}>
-              Sign In
+            <button
+              className="sign-in-button"
+              onClick={handleLogin}
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
           {error && <p style={{ color: "red" }}>{error}</p>}

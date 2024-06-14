@@ -2,15 +2,50 @@ import { Link } from "react-router-dom";
 import ArgentBankLogo from "../assets/img/argentBankLogo.png";
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../features/userInfos/userSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  fetchUserProfile,
+  updateUserProfile,
+  logout,
+} from "../features/auth/authSlice";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const { firstName, lastName } = useSelector((store) => store.user);
+  const navigate = useNavigate();
 
-  const [name, setName] = useState({ firstName: "", lastName: "" });
-  console.log(name);
+  const { token, user, loading, error } = useSelector((store) => store.auth);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  if (!token) {
+    navigate("/login");
+  }
+
+  const handleUpdate = () => {
+      dispatch(updateUserProfile({ token }));
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUserProfile(token));
+    }
+  }, [token, dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      console.log(user, "user");
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+    }
+  }, [user]);
+
   return (
     <>
       <nav className="main-nav">
@@ -27,10 +62,10 @@ export default function Profile() {
             <i className="fa fa-user-circle"></i>
             Tony
           </Link>
-          <Link className="main-nav-item" to="/">
+          <button className="main-nav-item" onClick={handleLogout}>
             <i className="fa fa-sign-out"></i>
             Sign Out
-          </Link>
+          </button>
         </div>
       </nav>
       <main className="main bg-dark">
@@ -38,7 +73,7 @@ export default function Profile() {
           <h1>
             Welcome back
             <br />
-            {firstName} {lastName}
+            {user && user.firstName} {user && user.lastName}
           </h1>
           <button className="edit-button">Edit Name</button>
         </div>
@@ -79,12 +114,7 @@ export default function Profile() {
             <input
               type="text"
               id="firstName"
-              onChange={(e) =>
-                setName((prevName) => ({
-                  ...prevName,
-                  firstName: e.target.value,
-                }))
-              }
+              onChange={(e) => setFirstName(e.target.value)}
             />
           </div>
           <div>
@@ -92,21 +122,13 @@ export default function Profile() {
             <input
               type="text"
               id="lastName"
-              onChange={(e) =>
-                setName((prevName) => ({
-                  ...prevName,
-                  lastName: e.target.value,
-                }))
-              }
+              onChange={(e) => setLastName(e.target.value)}
             />
           </div>
-          <button
-            onClick={() => {
-              dispatch(updateUser({firstName: name.firstName, lastName:name.lastName}));
-            }}
-          >
-            Update info
+          <button onClick={handleUpdate} disabled={loading}>
+            {loading ? "Updating..." : "Update Profile"}
           </button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
         </section>
       </main>
       <footer className="footer">

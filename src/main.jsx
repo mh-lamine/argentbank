@@ -7,6 +7,7 @@ import Login from "./routes/login";
 import Profile from "./routes/profile";
 import store from "./store";
 import { Provider } from "react-redux";
+// import ProtectedRoute from "./routes/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: (
+      // <ProtectedRoute>
+        <Profile />
+      // </ProtectedRoute>
+    ),
   },
 ]);
 

@@ -64,6 +64,13 @@ body {
   text-decoration: underline;
 }
 
+.main-nav-button{
+  border: none;
+  background-color: transparent;
+  margin-right: 0.5rem;
+  font-size: inherit;
+}
+
 .main-nav-logo {
   display: flex;
   align-items: center;

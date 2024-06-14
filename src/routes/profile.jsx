@@ -24,7 +24,7 @@ export default function Profile() {
   }
 
   const handleUpdate = () => {
-      dispatch(updateUserProfile({ token }));
+    dispatch(updateUserProfile({ token, profile: { firstName, lastName } }));
   };
 
   const handleLogout = () => {
@@ -40,7 +40,6 @@ export default function Profile() {
 
   useEffect(() => {
     if (user) {
-      console.log(user, "user");
       setFirstName(user.firstName);
       setLastName(user.lastName);
     }
@@ -60,9 +59,9 @@ export default function Profile() {
         <div>
           <Link className="main-nav-item" to="/profile">
             <i className="fa fa-user-circle"></i>
-            Tony
+            {user?.firstName}
           </Link>
-          <button className="main-nav-item" onClick={handleLogout}>
+          <button className="main-nav-button" onClick={handleLogout}>
             <i className="fa fa-sign-out"></i>
             Sign Out
           </button>
@@ -73,7 +72,7 @@ export default function Profile() {
           <h1>
             Welcome back
             <br />
-            {user && user.firstName} {user && user.lastName}
+            {user?.firstName} {user?.lastName}
           </h1>
           <button className="edit-button">Edit Name</button>
         </div>

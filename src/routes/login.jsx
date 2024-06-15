@@ -18,6 +18,9 @@ export default function Login() {
     if (login.fulfilled.match(resultAction)) {
       navigate("/profile");
     }
+    else {
+      console.log("Login failed:", error);
+    }
   };
 
   return (
@@ -71,7 +74,7 @@ export default function Login() {
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error.message}</p>}
         </section>
       </main>
       <footer className="footer">

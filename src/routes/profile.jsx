@@ -126,7 +126,7 @@ export default function Profile() {
           <button onClick={handleUpdate} disabled={loading}>
             {loading ? "Updating..." : "Update Profile"}
           </button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error.message}</p>}
         </section>
       </main>
       <footer className="footer">

@@ -19,10 +19,6 @@ export default function Profile() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  if (!token) {
-    navigate("/login");
-  }
-
   const handleUpdate = () => {
     dispatch(updateUserProfile({ token, profile: { firstName, lastName } }));
   };
@@ -36,7 +32,10 @@ export default function Profile() {
     if (token) {
       dispatch(fetchUserProfile(token));
     }
-  }, [token, dispatch]);
+    else {
+      navigate("/redirect");
+    }
+  }, []);
 
   useEffect(() => {
     if (user) {

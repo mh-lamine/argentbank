@@ -7,7 +7,7 @@ import Login from "./routes/login";
 import Profile from "./routes/profile";
 import store from "./store";
 import { Provider } from "react-redux";
-// import ProtectedRoute from "./routes/ProtectedRoute";
+import Redirect from "./routes/redirect";
 
 const router = createBrowserRouter([
   {
@@ -20,11 +20,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: (
-      // <ProtectedRoute>
-        <Profile />
-      // </ProtectedRoute>
-    ),
+    element: <Profile />,
+  },
+  {
+    path: "/redirect",
+    element: <Redirect />,
   },
 ]);
 

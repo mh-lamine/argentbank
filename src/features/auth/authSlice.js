@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Define async thunk for login
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }, { rejectWithValue }) => {
@@ -53,7 +52,6 @@ export const updateUserProfile = createAsyncThunk(
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(response, "response");
       return response.data.body;
     } catch (error) {
       return rejectWithValue(

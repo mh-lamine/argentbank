@@ -18,9 +18,11 @@ export default function Profile() {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [update, setUpdate] = useState(false);
 
   const handleUpdate = () => {
     dispatch(updateUserProfile({ token, profile: { firstName, lastName } }));
+    setUpdate(false);
   };
 
   const handleLogout = () => {
@@ -31,8 +33,7 @@ export default function Profile() {
   useEffect(() => {
     if (token) {
       dispatch(fetchUserProfile(token));
-    }
-    else {
+    } else {
       navigate("/redirect");
     }
   }, []);
@@ -71,9 +72,46 @@ export default function Profile() {
           <h1>
             Welcome back
             <br />
-            {user?.firstName} {user?.lastName}
+            {!update ? (
+              <>
+                {user?.firstName} {user?.lastName}
+              </>
+            ) : (
+              <div className="update-info">
+                <div>
+                  <label htmlFor="firstName">Nom</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="lastName">Prenom</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </div>
+                <button className="edit-button" onClick={handleUpdate}>
+                  Edit Name
+                </button>
+                {/* <button onClick={handleUpdate} disabled={loading}>
+                  {loading ? "Updating..." : "Update Profile"}
+                </button> */}
+                {error && <p style={{ color: "red" }}>{error.message}</p>}
+              </div>
+            )}
           </h1>
-          <button className="edit-button">Edit Name</button>
+          {!update && <button
+            className="edit-button"
+            onClick={() => {
+              setUpdate(true);
+            }}
+          >
+            Edit Name
+          </button>}
         </div>
         <h2 className="sr-only">Accounts</h2>
         <section className="account">
@@ -105,28 +143,6 @@ export default function Profile() {
           <div className="account-content-wrapper cta">
             <button className="transaction-button">View transactions</button>
           </div>
-        </section>
-        <section className="update-info">
-          <div>
-            <label htmlFor="firstName">Nom</label>
-            <input
-              type="text"
-              id="firstName"
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="lastName">Prenom</label>
-            <input
-              type="text"
-              id="lastName"
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
-          <button onClick={handleUpdate} disabled={loading}>
-            {loading ? "Updating..." : "Update Profile"}
-          </button>
-          {error && <p style={{ color: "red" }}>{error.message}</p>}
         </section>
       </main>
       <footer className="footer">

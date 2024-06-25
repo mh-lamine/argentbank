@@ -14,7 +14,7 @@ export default function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { token, user, loading, error } = useSelector((store) => store.auth);
+  const { token, user, error } = useSelector((store) => store.auth);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -97,9 +97,6 @@ export default function Profile() {
                 <button className="edit-button" onClick={handleUpdate}>
                   Edit Name
                 </button>
-                {/* <button onClick={handleUpdate} disabled={loading}>
-                  {loading ? "Updating..." : "Update Profile"}
-                </button> */}
                 {error && <p style={{ color: "red" }}>{error.message}</p>}
               </div>
             )}

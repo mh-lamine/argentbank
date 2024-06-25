@@ -1,5 +1,3 @@
-//Appeler la route pour se connecter en envoyant l'email et le mot de passe dans le body pour recuperer le token en reponse et le stoquer dans le Redux Store
-
 async function fetchToken(email, password) {
   const loginUrl = "http://localhost:3001/api/v1/user/login";
 

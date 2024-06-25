@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  firstName: "Lamine",
-  lastName: "Ngom",
+  firstName: "",
+  lastName: "",
   isLoading: false,
 };
 
